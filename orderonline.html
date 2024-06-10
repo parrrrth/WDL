@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Cart</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="https://cdn.iconscout.com/icon/free/png-512/free-tomato-vegetable-emoj-symbol-food-30690.png?f=webp&w=512">
+    <link rel="stylesheet" href="tomato.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.css" integrity="sha512-tx5+1LWHez1QiaXlAyDwzdBTfDjX07GMapQoFTS74wkcPMsI3So0KYmFe6EHZjI8+eSG0ljBlAQc3PQ5BTaZtQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Order Now</title>
+
+    <script>
+    function addToCart() {
+        var foodSelect = document.getElementById("food-select");
+        var quantityInput = document.getElementById("quantity");
+        var cartItems = document.getElementById("cart-items");
+        var totalPriceDisplay = document.getElementById("total-price");
+      
+        var food = foodSelect.value;
+        var quantity = parseInt(quantityInput.value);
+        var price = getPrice(food);
+        var totalPrice = quantity * price;
+      
+        if (quantity !== "" && quantity > 0) {
+          var newItem = document.createElement("li");
+          newItem.textContent = quantity + "x " + food + " - $" + totalPrice.toFixed(2);
+          cartItems.appendChild(newItem);
+          updateTotalPrice();
+          quantityInput.value = "";
+        } else {
+          alert("Please enter a valid quantity.");
+        }
+      }
+      
+      function getPrice(food) {
+        // Define prices for each food item
+        var prices = {
+          "pizza": 10.99,
+          "burger": 8.49,
+          "sandwich": 6.99
+        };
+        return prices[food];
+      }
+      
+      function updateTotalPrice() {
+        var cartItems = document.getElementById("cart-items").getElementsByTagName("li");
+        var total = 0;
+        for (var i = 0; i < cartItems.length; i++) {
+          var item = cartItems[i].textContent;
+          var price = parseFloat(item.split("- $")[1]);
+          total += price;
+        }
+        document.getElementById("total-price").textContent = "Total Price: $" + total.toFixed(2);
+      }
+    </script>
+    
+</head>
+<body>
+  <h1 style="color: white;">Food Cart</h1>
+  
+  <div>
+    <div class="header-img">
+        <img src="header-img.jpg" alt="" width="100%">
+    </div>
+    <label for="food-select" style="color: white;">Select Food:</label>
+    <select id="food-select">
+      <option value="pizza">Pizza</option>
+      <option value="burger">Burger</option>
+      <option value="sandwich">Sandwich</option>
+    </select>
+    <input type="number" id="quantity" placeholder="Quantity">
+    <button onclick="addToCart()" >Add to Cart</button>
+  </div>
+
+  <div id="cart">
+    <h2 style="color: white;">Cart</h2>
+    <ul id="cart-items">
+    </ul>
+    <p id="total-price" style="color: white;">Total Price: $0.00</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
